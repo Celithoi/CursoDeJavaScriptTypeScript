@@ -13,6 +13,23 @@ export default class Main extends Component {
     index: -1,
   };
 
+  // copia os dados de local storage para meu app quando a pagina é montada
+  componentDidMount() {
+    const tarefas = JSON.parse(localStorage.getItem("tarefas"));
+    if (!tarefas) return;
+
+    this.setState({ tarefas });
+  }
+  // envia os meus arquivos para local storage depois de cada ação.
+  componentDidUpdate(prevProps, PrevState) {
+    const { tarefas } = this.state;
+    if (tarefas === PrevState.tarefas) return;
+
+    // console.log("As Tarefas mudaram", tarefas);
+
+    localStorage.setItem("tarefas", JSON.stringify(tarefas));
+  }
+
   ////
   //// Tratando o Submit
   ////
